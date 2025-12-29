@@ -14,7 +14,7 @@ export default async function TicketsPage() {
                 <Button variant="default" asChild>
                     <Link href="/tickets/new">
                         <CirclePlusIcon className="w-4 h-4" />
-                        Agregar Ticket
+                        Nuevo ticket
                     </Link>
                 </Button>
             </header>

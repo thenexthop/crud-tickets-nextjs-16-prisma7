@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import prisma from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
-import { ticketSchema } from '@/lib/schemas/ticket.schema';
+import { Ticket, TicketFormInputs, ticketSchema } from '@/lib/schemas/ticket.schema';
 
 export const GET = async () => {
     try {
@@ -28,6 +28,8 @@ export const POST = async (request: NextRequest) => {
     try {
 
         const body = await request.json()
+
+        body.id = newUserId
 
         const { title, description, assignedTo, status } = ticketSchema.parse(body)
 

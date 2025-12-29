@@ -8,4 +8,9 @@ export const ticketSchema = z.object({
     status: z.enum(["TODO", "IN_PROGRESS", "DONE", "REJECTED"]),
 })
 
+// Para los formularios de creación y edición
+export const ticketFormSchema = ticketSchema.omit({ id: true })
+
 export type Ticket = z.infer<typeof ticketSchema>;
+
+export type TicketFormInputs = z.infer<typeof ticketFormSchema>
