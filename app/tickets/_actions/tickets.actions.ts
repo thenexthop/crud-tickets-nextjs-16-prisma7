@@ -2,16 +2,19 @@ import { Ticket, TicketFormInputs } from "@/lib/schemas/ticket.schema"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-export async function getTickets(): Promise<{ tickets: Ticket[] }> {
-    const tickets = await fetch(`${BASE_URL}/tickets`)
+export async function getTickets({ page, limit }: { page: number, limit: number }): Promise<{ tickets: Ticket[], totalPages: number }> {
+
+    const tickets = await fetch(`${BASE_URL}/tickets?page=${page}&limit=${limit}`)
         .then((res) => {
             if (!res.ok) {
                 throw new Error("Ocurrió un error al obtener los tickets.")
             }
-            return res.json() as Promise<{ tickets: Ticket[] }>
+
+            return res.json() as Promise<{ tickets: Ticket[], totalPages: number }>
+
         }).catch((error) => {
             console.error("Error al obtener los tickets:", error)
-            return { tickets: [] }
+            return { tickets: [], totalPages: 0 }
         })
 
     return tickets

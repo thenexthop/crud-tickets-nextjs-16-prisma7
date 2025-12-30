@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { ChevronLeftIcon } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-import TicketForm from "@/features/tickets/ticket-form"
+import TicketForm from "@/features/tickets/components/ticket-form"
 import { Ticket } from "@/lib/schemas/ticket.schema"
 import { getTicketById } from "../_actions/tickets.actions"
 

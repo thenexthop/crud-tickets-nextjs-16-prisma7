@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { Ticket } from "@/lib/schemas/ticket.schema";
-import { deleteTicket } from "../_actions/tickets.actions";
+import { deleteTicket } from "@/app/tickets/_actions/tickets.actions"
 
 import {
     Card,

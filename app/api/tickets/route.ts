@@ -2,12 +2,29 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import prisma from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
-import { Ticket, TicketFormInputs, ticketSchema } from '@/lib/schemas/ticket.schema';
+import { ticketSchema } from '@/lib/schemas/ticket.schema';
 
-export const GET = async () => {
+
+export const GET = async (request: NextRequest) => {
     try {
-        const tickets = await prisma.ticket.findMany()
-        return NextResponse.json({ tickets })
+
+        const url = await request.url
+        const { searchParams } = new URL(url)
+
+        const page = Number(searchParams.get("page") || 1)
+        const limit = Number(searchParams.get("limit") || 10)
+        const skip = (page - 1) * limit
+
+        const tickets = await prisma.ticket.findMany(
+            {
+                skip,
+                take: limit
+            }
+        )
+        const count = await prisma.ticket.count()
+        const totalPages = Math.ceil(count / limit)
+
+        return NextResponse.json({ tickets, totalPages })
 
     } catch (error) {
         if (error instanceof z.ZodError) {
