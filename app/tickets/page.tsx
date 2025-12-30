@@ -2,11 +2,16 @@ import { Button } from "@/components/ui/button";
 import { CirclePlusIcon } from "lucide-react";
 import Link from "next/link";
 import TicketCard from "@/features/tickets/components/ticket-card"
-import { getTickets } from "./_actions/tickets.actions";
-import TicketsPagination from "@/features/tickets/components/tickets-pagination";
+import { getTickets } from "@/app/tickets/_actions/tickets.actions";
+import TicketsPagination from "@/components/tickets-pagination";
+import TicketsFilters from "@/features/tickets/components/tickets-filters";
 
 interface TicketsPageProps {
-    searchParams?: Promise<{ page: string, limit: string }>
+    searchParams?: Promise<{
+        page: string,
+        limit: string,
+        status: string
+    }>
 }
 
 const DEFAULT_LIMIT = 4
@@ -17,8 +22,9 @@ export default async function TicketsPage({
 
     const page = Number((await searchParams)?.page || 1)
     const limit = Number((await searchParams)?.limit || DEFAULT_LIMIT)
+    const status = (await searchParams)?.status
 
-    const { tickets, totalPages } = await getTickets({ page, limit })
+    const { tickets, totalPages } = await getTickets({ page, limit, status })
 
     return (
         <div className="max-w-5xl mx-auto p-8">
@@ -31,6 +37,8 @@ export default async function TicketsPage({
                     </Link>
                 </Button>
             </header>
+
+            <TicketsFilters status={status} />
 
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {tickets.map((ticket) => (

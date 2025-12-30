@@ -4,17 +4,17 @@ import { useEffect } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
-interface TicketsPaginationProps {
+interface PaginationProps {
     currentPage: number,
     totalPages: number,
     limit: number
 }
 
-export default function TicketsPagination({
+export default function Pagination({
     currentPage,
     totalPages,
     limit
-}: TicketsPaginationProps) {
+}: PaginationProps) {
     const searchParams = useSearchParams()
     const pathname = usePathname()
     const router = useRouter()
@@ -35,10 +35,10 @@ export default function TicketsPagination({
 
     return (
         <>
-            <nav className="mt-6" aria-label="tickets-pagination" role="pagination">
+            <nav className="mt-6" aria-label="pagination-component" role="pagination">
                 <div className="flex flex-1 min-w-80 ml-auto items-center">
                     <button
-                        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-l-md hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none disabled:select-none"
+                        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-l-md hover:bg-gray-50 hover:cursor-pointer disabled:opacity-50 disabled:pointer-events-none disabled:select-none"
                         disabled={currentPage === 1}
                         onClick={() => handlePageChange(currentPage - 1)}
                     >
@@ -48,7 +48,7 @@ export default function TicketsPagination({
                         {currentPage} de {totalPages}
                     </span>
                     <button
-                        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-r-md hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none disabled:select-none"
+                        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-r-md hover:bg-gray-50 hover:cursor-pointer disabled:opacity-50 disabled:pointer-events-none disabled:select-none"
                         disabled={currentPage === totalPages}
                         onClick={() => handlePageChange(currentPage + 1)}
                     >

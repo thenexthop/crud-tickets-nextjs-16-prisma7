@@ -95,7 +95,6 @@ export default function TicketForm({ ticket }: { ticket?: Ticket }) {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FieldSet>
-                    <FieldLegend>{ticket ? "Editar " : "Crear "} ticket</FieldLegend>
                     <FieldDescription>{ticket ? "Editar " : "Crear "} un  requerimiento y asignarlo a un miembro del equipo.</FieldDescription>
                     <FieldGroup>
                         <Field>

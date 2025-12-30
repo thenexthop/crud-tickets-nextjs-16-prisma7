@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { ChevronLeftIcon } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import TicketForm from "@/features/tickets/components/ticket-form"
 import { Ticket } from "@/lib/schemas/ticket.schema"
 import { getTicketById } from "../_actions/tickets.actions"
@@ -23,22 +23,27 @@ export default async function NewTicketPage({ params }: FormTicketProps) {
 
     return (
         <>
-            <div className="max-w-5xl mx-auto p-8 space-y-6">
-                <Link href="/tickets" className="flex items-center gap-2">
-                    <ChevronLeftIcon className="w-4 h-4" />
-                    <span className="text-md text-gray-800 hover:underline hover:text-gray-900">Regresar</span>
-                </Link>
-                <h1 className="text-3xl font-bold">
-                    {id ? "Editar ticket" : "Crear un nuevo ticket"}
-                </h1>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-                <Card className="w-full max-w-md p-4">
-                    <CardContent>
-                        <TicketForm ticket={data?.ticket} />
-                    </CardContent>
-                </Card>
-            </div>
+            <section className="max-w-md mx-auto p-8 space-y-6">
+                <div className="flex items-center gap-2">
+                    <Link href="/tickets" className="flex items-center gap-2">
+                        <ChevronLeftIcon className="w-4 h-4" />
+                        <span className="text-md text-gray-800 hover:underline hover:text-gray-900">Regresar</span>
+                    </Link>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                    <Card className="w-full max-w-md p-4">
+                        <CardHeader className="flex items-center justify-center text-center p-4">
+                            <CardTitle className="text-2xl">
+                                {id ? "Editar ticket" : "Crear un nuevo ticket"}
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <TicketForm ticket={data?.ticket} />
+                        </CardContent>
+                    </Card>
+                </div>
+            </section>
+
         </>
     )
 }

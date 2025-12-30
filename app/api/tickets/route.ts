@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
 import { ticketSchema } from '@/lib/schemas/ticket.schema';
 
+type TicketStatus = "TODO" | "IN_PROGRESS" | "REJECTED" | "DONE"
 
 export const GET = async (request: NextRequest) => {
     try {
@@ -14,14 +15,23 @@ export const GET = async (request: NextRequest) => {
         const page = Number(searchParams.get("page") || 1)
         const limit = Number(searchParams.get("limit") || 10)
         const skip = (page - 1) * limit
+        const status = searchParams.get("status") as TicketStatus || undefined
 
         const tickets = await prisma.ticket.findMany(
             {
                 skip,
-                take: limit
+                take: limit,
+                where: {
+                    status: status || undefined
+                }
             }
         )
-        const count = await prisma.ticket.count()
+        const count = await prisma.ticket.count({
+            where: {
+                status: status || undefined
+            }
+        })
+
         const totalPages = Math.ceil(count / limit)
 
         return NextResponse.json({ tickets, totalPages })

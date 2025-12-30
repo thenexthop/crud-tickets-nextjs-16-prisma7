@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { getTickets } from "./tickets/_actions/tickets.actions";
 
 export default async function Home() {
-  const { tickets } = await getTickets()
+  const { tickets } = await getTickets({ page: 1, limit: 3 })
 
   return (
     <>
