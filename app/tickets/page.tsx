@@ -41,9 +41,11 @@ export default async function TicketsPage({
             <TicketsFilters status={status} />
 
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {tickets.map((ticket) => (
+                {tickets.length > 0 ? tickets.map((ticket) => (
                     <TicketCard key={ticket.id} ticket={ticket} />
-                ))}
+                )) : (
+                    <p>No hay tickets</p>
+                )}
             </div>
             <div>
                 <TicketsPagination
